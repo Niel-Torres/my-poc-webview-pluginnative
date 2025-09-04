@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonFooter, IonButton } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonFooter, IonButton, IonMenu, IonButtons, IonMenuButton } from '@ionic/angular/standalone';
 import { registerPlugin } from '@capacitor/core';
 
 type Rect = { x: number; y: number; width: number; height: number; };
@@ -16,18 +16,35 @@ const NativeWebView = registerPlugin<{
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonFooter, IonButton],
+  imports: [IonButtons, IonHeader, IonToolbar, IonTitle, IonContent, IonFooter, IonButton, IonMenu, IonMenuButton],
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements AfterViewInit {
   @ViewChild('nativeHost', { read: ElementRef }) nativeHost!: ElementRef<HTMLDivElement>;
+  @ViewChild(IonMenu, { static: true }) menu!: IonMenu;
 
   ngAfterViewInit() {
     requestAnimationFrame(() => {
       this.positionNative();
     });
+    // Detectar apertura/cierre del menú
+    if (this.menu) {
+      this.menu.ionDidOpen.subscribe(() => this.onMenuOpen());
+      this.menu.ionDidClose.subscribe(() => this.onMenuClose());
+    }
   }
+
+  onMenuOpen() {
+    console.log('Menú lateral ABIERTO');
+    NativeWebView.hide();
+  }
+
+  onMenuClose() {
+    console.log('Menú lateral CERRADO');
+    NativeWebView.show();
+  }
+
   @HostListener('window:resize') onResize() { NativeWebView.setRect(this.getRect()); }
 
   getRect(): Rect {
@@ -44,7 +61,7 @@ export class HomePage implements AfterViewInit {
 
   private positionNative() {
     const r = this.getRect();
-    NativeWebView.create({ url: 'https://nieltorres.com', ...r });
+    NativeWebView.create({ url: 'https://ws111.juntadeandalucia.es/catalogoplayas/visorplayas/', ...r });
   }
 
   // (Opcional) si usas Ionic Router, este hook también va muy bien
@@ -53,7 +70,7 @@ export class HomePage implements AfterViewInit {
     NativeWebView.setRect(r); // por si el tamaño cambió tras transiciones
   }
 
-  loadUrl() { NativeWebView.create({ url: 'https://nieltorres.com', ...this.getRect() }); }
+  loadUrl() { NativeWebView.create({ url: 'https://ws111.juntadeandalucia.es/catalogoplayas/visorplayas/', ...this.getRect() }); }
   hide() { return NativeWebView.hide(); }
   show() { return NativeWebView.show(); }
   ionViewDidLeave() { NativeWebView.destroy(); }

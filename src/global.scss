@@ -37,4 +37,14 @@
 @import '@ionic/angular/css/palettes/dark.system.css';
 
 
-
+:root {
+  /* YOUR OTHER STYLES */
+  --ion-safe-area-top: 3rem;
+  // --ion-safe-area-bottom: 3rem;
+}
+// ion-content{
+//   --padding-bottom: 60px;
+// }
+ion-header ion-toolbar:first-of-type {
+    padding-top: var(--ion-safe-area-top, 0);
+}

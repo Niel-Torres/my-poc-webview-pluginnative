@@ -1,18 +1,45 @@
-<ion-header>
+<ion-menu #menu contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menu Content</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">This is the menu content.</ion-content>
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <div
+      #nativeHost
+      id="nativeHost"
+      class="native-host"
+      style="width: 100%; height: 60vh; background: #c68e8e"
+    ></div>
+    <ion-button expand="block" (click)="loadUrl()">Cargar URL</ion-button>
+    <ion-button expand="block" fill="outline" (click)="hide()"
+      >Ocultar</ion-button
+    >
+    <ion-button expand="block" fill="outline" (click)="show()"
+      >Mostrar</ion-button
+    >
+  </ion-content>
+
+  <ion-footer>
+    <ion-toolbar>
+      <ion-title size="small">Footer</ion-title>
+    </ion-toolbar>
+  </ion-footer>
+</div>
+
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>POC: Native WebView 3 </ion-title>
   </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <div #nativeHost id="nativeHost" class="native-host" style="width:100%; height:60vh; background:#c68e8e;"></div>
-  <ion-button expand="block" (click)="loadUrl()">Cargar URL</ion-button>
-  <ion-button expand="block" fill="outline" (click)="hide()">Ocultar</ion-button>
-  <ion-button expand="block" fill="outline" (click)="show()">Mostrar</ion-button>
-</ion-content>
-
-<ion-footer>
-  <ion-toolbar>
-    <ion-title size="small">Footer</ion-title>
-  </ion-toolbar>
-</ion-footer>
+</ion-header> -->
